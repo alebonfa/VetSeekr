@@ -1,0 +1,25 @@
+body {
+	padding-top: 60px;
+	background-image:url("../images/wallpaper.jpg");
+	background-attachment: fixed;
+}
+
+.hero{
+    width:auto;
+	opacity: 0.85;
+}
+.hero-unit h1{
+    margin-top:0;
+    padding-top:0;
+    color:#000000;
+    text-shadow:1px 1px 2px #ffffff;
+    opacity: 1;
+}
+.hero-unit p{
+    text-align:justify;
+    color:#000000;
+    text-shadow:1px 1px 2px #ffffff;
+    opacity: 1;
+}
+
+
