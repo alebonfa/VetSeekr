@@ -1,3 +1,8 @@
+<?php
+    include 'php/conn.php';
+    $query = mysql_query("SELECT id, nome, descricao FROM especialidades");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR" class="no-js">
 
@@ -5,14 +10,16 @@
 
     <title>ABVET - Associação Brasileira de Veterinários Especialistas</title>
 
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="js/modernizr/modernizr.js"></script>
+    <script src="js/modernizr/modernizr-latest.js"></script>
     <script src="js/jquery/jquery.js"></script>
     <script src="js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap/js/bootstrap-select.min.js"></script>
 
     <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="js/bootstrap/css/bootstrap-select.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" type="text/css" href="css/app.css">
 
   </head>
@@ -49,12 +56,18 @@
                     <legend>Encontre o seu Veterinário Especialista</legend>
                     <div class="controls controls-row">
                         <label class="span2">Especialidade</label>
-                        <select class="span4">
+                        <select class="span10 selectpicker" multiple>
+                            <option>Selecione...</option>
+                            <?php while($i = mysql_fetch_array($query)) { ?>
+                                <option value="<?php echo $i['id'] ?>">
+                                    <?php echo $i['nome']?>
+                                </option>
+                            <?php } ?>
                         </select>
                         <label class="span2">Cidade</label>
-                        <select class="span4">
+                        <select class="span10 selectpicker">
                         </select>
-                        <a href="#" class="btn btn-primary btn-medium span2 offset1" rel="" title="">Saiba mais »</a>
+                        <a href="#" class="btn btn-primary btn-medium span2 offset1" rel="" title="">Pesquisar 1</a>
                     </div>
                 </form>
             </div>
@@ -109,6 +122,11 @@
       <div class="span2"></div>
       <div class="span6"></div>
     </div>
+
+    <script type="text/javascript">
+        $('.selectpicker').selectpicker();
+    </script>
+
 
   </body>
 </html>
