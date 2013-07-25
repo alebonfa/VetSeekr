@@ -18,6 +18,7 @@
     <script src="js/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/bootstrap/js/bootstrap-select.min.js"></script>
     <script src="//underscorejs.org/underscore-min.js"></script>
+    <script src="js/app.js"></script>
 
     <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="js/bootstrap/css/bootstrap-select.css" rel="stylesheet" media="screen">
@@ -85,47 +86,6 @@
             </form>
         </div>
     </div> <!-- /container hero -->
-
-    <script type="text/javascript">
-
-        $(function(){
-
-            var cidades = [];
-
-            $('.selectpicker').selectpicker();
-
-            /*
-            var call = $.ajax({
-                type: "POST",
-                url: "php/getCidades.php",
-                dataType: "json",
-                async: false,
-                success: function(result){
-                    alert(result);
-                }
-            }).responseText;
-            */
-
-            $("#srcCidades").typeahead({
-                source : function(query, process) {
-                    $.ajax({
-                        url: "php/getCidades.php",
-                        cache: false,
-                        success: function(data) {
-                            cidades = [];
-                            _.each( data, function(item, ix, list) {
-                                cidades.push(item.nome);
-                            });
-                            alert(cidades)
-                            process(cidades);
-                        }
-                    });
-                }
-            });
-        });
-
-    </script>
-
 
 </body>
 </html>

@@ -9741,7 +9741,7 @@ CREATE TABLE `ufs` (
   `uf` varchar(10) NOT NULL default '',
   `nome` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 -- 
 -- Extraindo dados da tabela `ufs`
