@@ -71,6 +71,7 @@ $(document).ready(function(){
 
         var latlng = new google.maps.LatLng(latitude, longitude);
         var geocoder = new google.maps.Geocoder();
+        
         geocoder.geocode({'latLng': latlng}, function(results, status) {
             if (results[1]) {
                 informacoes += "Endereço: " + results[1].formatted_address;
@@ -81,6 +82,7 @@ $(document).ready(function(){
                 alert("Geocoder falhou devido a " + status);
             }
         });
+
         alert("3 - " + informacoes);
         document.getElementById('msg').innerHTML = informacoes;
     }
