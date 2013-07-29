@@ -1,9 +1,3 @@
-<?php
-    include 'php/conn.php';
-    $query = mysql_query("SELECT id, nome, descricao FROM especialidades");
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR" class="no-js">
 
