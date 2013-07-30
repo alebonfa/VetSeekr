@@ -20,7 +20,7 @@
 
                     <li class="btn-group dropdown">
                     
-                        <button class="btn dropdwon-toggle">
+                        <button class="btn dropdwon-toggle" data-toggle="dropdown">
                             <i class="icon-search"></i>
                         </button>
                         <ul class="dropdown-menu">
@@ -28,8 +28,12 @@
                                 <a href="">TODO Search bat</a>
                             </li>
                         </ul>
+
+                    </li>
+
+                    <li class="btn-group dropdown" style="margin-left:0px;">
                     
-                        <button class="btn" data-toggle="dropdown">
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
                             <span class="badge badge-important">
                                 <i class="icon-exclamation-sign icon-white"></i>
                             </span>
@@ -44,6 +48,10 @@
                             </li>
                         </ul>
 
+                    </li>
+                    
+                    <li class="btn-group dropdown" style="margin-left:0px;">
+
                         <button class="btn dropdown-toggle" data-toggle="dropdown" href="">
                             <i class="icon-home"></i>
                             <b class="caret"></b>
@@ -56,6 +64,10 @@
                                 <a href="">Favs</a>
                             </li>
                         </ul>
+
+                    </li>
+                    
+                    <li class="btn-group dropdown" style="margin-left:0px;">
 
                         <button class="btn dropdown-toggle" data-toggle="dropdown" href=''>
                             <i class='icon-wrench'></i>
@@ -72,7 +84,27 @@
                                 <a href="">Account</a>
                             </li>
                         </ul>
+
                     </li>
+
+                    <ul class="nav">
+                        <li><a href="#mdlSignup" role="button" data-toggle="modal">Cadastre-se</a></li>
+                    </ul>
+
+                    <!--
+                    <div id="mdlSignup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3>Cadastre-se hoje mesmo!</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>Algo aqui</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                        </div>
+                    </div>
+                    -->
 
                     <li class="dropdown">
                         <a id="" href="" class="dropdown-toggle" data-toggle='dropdown' style='padding-top:8px;padding-bottom:2px;'>
@@ -91,3 +123,19 @@
         </div>
     </div>
 </div>
+
+<div id="mdlSignup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Modal header</h3>
+    </div>
+    <div class="modal-body">
+        <p>Um corpo fino …</p>
+        <input type="text" id="user" />
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+        <button class="btn btn-primary">Salvar mudanças</button>
+    </div>
+</div>
+

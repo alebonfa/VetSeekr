@@ -123,33 +123,23 @@ if(isset($_POST['signup'])){
 
         <?php require_once ('navbar.html'); ?>
 
-        <?= show_errors($action); ?>
-
-        <form method="post" action="">
-
-            <fieldset>
-            
-                <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <label for="username">Username:</label>
-                        <input type="text" name="username" />
-                    </li>
-                    <li>
-                        <label for="password">Password:</label>
-                        <input type="password" name="password" />
-                    </li>
-                    <li>
-                        <label for="email">Email:</label>
-                        <input type="text" name="email" />  
-                    </li>
-                    <li>
-                        <input type="submit" value="Signup Now" class="large blue button" name="signup" />          
-                    </li>
-                </ul>
-                
-            </fieldset>
-            
-        </form>         
+        <!-- Button to trigger modal -->
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">Executar modal de demo</a>
+         
+        <!-- Modal -->
+        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Modal header</h3>
+          </div>
+          <div class="modal-body">
+            <p>Um corpo fino …</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+            <button class="btn btn-primary">Salvar mudanças</button>
+          </div>
+        </div>   
 
     </body>
 
