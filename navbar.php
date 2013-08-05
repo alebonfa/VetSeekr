@@ -1,9 +1,5 @@
 <?php
 
-    function showName($nome) {
-        return 'Mi nombre es ' . $nome;
-    }
-
     function validateAndSend() {
 
         include_once 'inc/php/config.php';
@@ -92,29 +88,26 @@
 
 ?>
 
+<!--
 <script>
 
     function validaCadastrar() {
-
         if(document.Cadastro.txtNome.value=="") {
             alert('Nome em Branco');
         } else {
-            var jscNome = document.Cadastro.txtNome.value;
-            document.getElementById("mostraNome").innerHTML = "<?php echo showName(' ?> " document.Cadastro.txtNome.value  " <?php ') ?> ";
+            document.getElementById("mostraNome").innerHTML = "ABC" ;//<?php teleportaNome(document.getElementById('txtNome').value); ?>";
         }
-
         if(document.Cadastro.txtEmail.value=="") {
             alert('e-mail em Branco');
         }
-
         if(document.Cadastro.txtSenha.value=="") {
             alert('Senha em Branco');
         }
-
         return true;
     }
 
 </script>
+-->
 
 <!-- Início da barra de navegação -->
 <div class="navbar navbar-fixed-top">
@@ -211,7 +204,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-        <button class="btn btn-primary" name="btnCadastrar" onclick="validaCadastrar()">Salvar mudanças</button>
+        <button class="btn btn-primary" name="btnCadastrar">Salvar mudanças</button>
     </div>
 
 </div>
