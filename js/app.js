@@ -1,5 +1,20 @@
 $(document).ready(function(){
 
+   $("input#btnCadastrar").click(function(){
+        $.ajax({
+            type: "POST",
+            url: "./php/signup.php",
+            data: $("form#Cadastro").serialize(),
+            success: function(msg){
+                alert($("form#Cadastro").serialize());
+                $("#mostraNome").html($("form#Cadastro").serialize());
+            },
+            error: function(){
+                alert('Falhou!');
+            }
+        });
+    });
+
     var cidades = [];
     var $geoCidade = geoip_city();
     var $geoUf = geoip_region_name();

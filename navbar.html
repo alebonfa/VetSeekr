@@ -1,4 +1,7 @@
 <?php
+    if(isset($_POST['btnCadastrar'])) {
+        echo "<script>alert('ABC');</script>";
+    }
 
     function showName($nome) {
         return 'Mi nombre es ' . $nome;
@@ -92,30 +95,6 @@
 
 ?>
 
-<script>
-
-    function validaCadastrar() {
-
-        if(document.Cadastro.txtNome.value=="") {
-            alert('Nome em Branco');
-        } else {
-            var jscNome = document.Cadastro.txtNome.value;
-            document.getElementById("mostraNome").innerHTML = "<?php echo showName(' ?> " document.Cadastro.txtNome.value  " <?php ') ?> ";
-        }
-
-        if(document.Cadastro.txtEmail.value=="") {
-            alert('e-mail em Branco');
-        }
-
-        if(document.Cadastro.txtSenha.value=="") {
-            alert('Senha em Branco');
-        }
-
-        return true;
-    }
-
-</script>
-
 <!-- Início da barra de navegação -->
 <div class="navbar navbar-fixed-top">
 
@@ -168,7 +147,7 @@
         <h3 id="myModalLabel">Cadastre-se</h3>
     </div>
     <div class="modal-body">
-        <form name="Cadastro" method="POST">
+        <form id="Cadastro" method="POST">
             <!--
             <div class="row-fluid">
                 
@@ -182,36 +161,37 @@
             </div>
             -->
             <div id="mostraNome"></div>
-
             <div class="row-fluid">
                 <div class="span2">
-                    <label>Nome:</label>
+                    <label class="span12" for="txtNome">Nome:</label>
                 </div>
                 <div class="span10">
-                    <input class="span12" type="text" id="txtNome">
+                    <input type="text" name="txtNome" class="span12"><br>
                 </div>
             </div>
             <div class="row-fluid">
                 <div class="span2">
-                    <label>e-mail:</label>
+                    <label class="span12" for="txtEmail">e-mail:</label>
                 </div>
                 <div class="span10">
-                    <input class="span12" type="text" id="txtEmail">
+                    <input type="text" name="txtEmail" class="span12"><br>
                 </div>
             </div>
             <div class="row-fluid">
                 <div class="span2">
-                    <label>Senha:</label>
+                    <label class="span12" for="txtSenha">Senha:</label>
                 </div>
-                <div class="span5">
-                    <input class="span12" type="password" id="txtSenha">
+                <div class="span10">
+                    <input type="password" name="txtSenha" class="span12"><br>
                 </div>
             </div>
         </form>
     </div>
+        
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-        <button class="btn btn-primary" name="btnCadastrar" onclick="validaCadastrar()">Salvar mudanças</button>
+        <input type="submit" class="btn btn-primary" id="btnCadastrar" value="Cadastrar">
     </div>
+    
 
 </div>
