@@ -1,19 +1,39 @@
 $(document).ready(function(){
 
-   $("input#btnCadastrar").click(function(){
-        $.ajax({
-            type: "POST",
-            url: "./php/signup.php",
-            data: $("form#Cadastro").serialize(),
-            success: function(msg){
-                alert($("form#Cadastro").serialize());
-                $("#mostraNome").html($("form#Cadastro").serialize());
-            },
-            error: function(){
-                alert('Falhou!');
-            }
-        });
+    $("input#btnCadastrar").click(function(){
+        if($("#Cadastro")[0].checkValidity()) {
+            $.ajax({
+                type: "POST",
+                url: "signup.php",
+                data: $("#Cadastro").serialize(),
+                dataType: 'json',
+                success: function(msg){
+                    if (msg[0] == "success") {
+                        alertSignupSuccess(msg[1]);
+                    } else {
+                        alertSignupError(msg[1]);
+                    }
+                }
+            });
+        } else {
+            $("#sbmCadastrar").trigger("click");
+        }
+        
     });
+
+    function alertSignupError(msg) {
+        $("#alert_placeholder").html('<div class="alert alert-error" id="msgSignupError"></div>');
+        $("#msgSignupError").html('<button type="button" class="close" data-dismiss="alert">x</button>');
+        $("#msgSignupError").append('<strong>Atenção! </strong>' + msg);
+    }
+
+    function alertSignupSuccess(msg) {
+        alert(msg);
+        $("#alert_placeholder").html('<div class="alert alert-success" id="msgSignupSuccess"></div>');
+        $("#msgSignupSuccess").html('<button type="button" class="close" data-dismiss="alert">x</button>');
+        $("#msgSignupSuccess").append('<strong>Parabéns! </strong>' + msg);
+    }
+
 
     var cidades = [];
     var $geoCidade = geoip_city();

@@ -1,146 +1,92 @@
 <?php
 
-include_once 'php/conn.php';
-include_once 'php/functions.php';
+    if(isset($_POST['txtNome'])) {
 
-//setup some variables/arrays
-$action = array();
-$action['result'] = null;
+        include_once 'php/conn.php';
+        include_once 'php/functions.php';
 
-$text = array();
+        //inializando arrays de mensagens de sucesso/erro
+        $action = array();
+        $action['result'] = null;
 
-//check if the form has been submitted
-if(isset($_POST['signup'])){
+        $text = array();
 
-    //cleanup the variables
-    //prevent mysql injection
-    $username = mysql_real_escape_string($_POST['username']);
-    $password = mysql_real_escape_string($_POST['password']);
-    $email = mysql_real_escape_string($_POST['email']);
-    
-    //quick/simple validation
-    if(empty($username)){ $action['result'] = 'error'; array_push($text,'You forgot your username'); }
-    if(empty($password)){ $action['result'] = 'error'; array_push($text,'You forgot your password'); }
-    if(empty($email)){ $action['result'] = 'error'; array_push($text,'You forgot your email'); }
-    
-    if($action['result'] != 'error'){
-                
-        $password = md5($password); 
-            
-        //add to the database
-        $add = mysql_query("INSERT INTO `users` VALUES(NULL,'$username','$password','$email',0)");
+        //transporte de variáveis, previnindo mysql injection
+        $nome = mysql_real_escape_string($_POST['txtNome']);
+        $email = mysql_real_escape_string($_POST['txtEmail']);
+        $senha = mysql_real_escape_string($_POST['txtSenha']);
         
-        if($add){
-            
-            //get the new user id
-            $userid = mysql_insert_id();
-            
-            //create a random key
-            $key = $username . $email . date('mY');
-            $key = md5($key);
-            
-            //add confirm row
-            $confirm = mysql_query("INSERT INTO `confirm` VALUES(NULL,'$userid','$key','$email')"); 
-            
-            if($confirm){
-            
-                //include the swift class
-                include_once 'inc/php/swift/swift_required.php';
-            
-                //put info into an array to send to the function
-                $info = array(
-                    'username' => $username,
-                    'email' => $email,
-                    'key' => $key);
-            
-                //send the email
-                if(send_email($info)){
-                                
-                    //email sent
-                    $action['result'] = 'success';
-                    array_push($text,'Thanks for signing up. Please check your email for confirmation!');
-                
-                }else{
-                    
-                    $action['result'] = 'error';
-                    array_push($text,'Could not send confirm email');
-                
-                }
-            
-            }else{
-                
-                $action['result'] = 'error';
-                array_push($text,'Confirm row was not added to the database. Reason: ' . mysql_error());
-                
-            }
-            
-        }else{
-        
-            $action['result'] = 'error';
-            array_push($text,'User could not be added to the database. Reason: ' . mysql_error());
-        
+        //validações
+        if(empty($email)) { 
+        	$action['result'] = 'error'; 
+        	array_push($text,'O e-mail deve ser válido!'); 
+        } else {
+
+        	$procura = mysql_query("SELECT * FROM users WHERE email = '$email'") or die("Execução de consulta gerou o seguinte erro no MYSQL: " . mysql_error());
+                    echo json_encode(array("success", "Foi!"));
+        exit;
+        	if(mysql_num_rows($procura)>0) {
+	        	$action['result'] = 'error'; 
+    	    	array_push($text,'Este e-mail já está cadastrado!'); 
+        	} else {
+		        if(empty($nome)) { 
+		        	$action['result'] = 'error'; 
+		        	array_push($text,'O Nome deve ser preenchido!'); 
+		        }
+		        if(empty($senha)) { 
+		        	$action['result'] = 'error'; 
+		        	array_push($text,'A Senha não pode estar em branco!'); 
+		       	}
+		    }
         }
-    
-    }
-    
-    $action['text'] = $text;
+        
 
-}
+        if($action['result'] != 'error'){
+            $senha = md5($senha); 
+            //adicionando ao banco de dados
+            $add = mysql_query("INSERT INTO users VALUES(NULL,'$email','$nome','$senha',0)");
+            if($add){
+                //salvando o ID recém criado
+                $userid = mysql_insert_id();
+                //criando uma chave randômica, baseado no nome e e-mail
+                $key = $nome . $email . date('mY');
+                $key = md5($key);
+                //add confirm row
+                $confirm = mysql_query("INSERT INTO confirm VALUES(NULL,'$userid','$key','$email')"); 
+                if($confirm){
+                    //incluindo a classe swift para controlar envios de e-mail
+                    include_once 'swift/swift_required.php';
+                    //criando array de informações para envio do e-mail de confirmações
+                    $info = array(
+                        'nome' => $nome,
+                        'email' => $email,
+                        'key' => $key);
+                    //enviando o e-mail
+                    if(send_email($info)){
+                        //email enviado
+                        $action['result'] = 'success';
+                        array_push($text,'Obrigado por se Cadastrar! Verifique seu e-mail para confirmação.');
+                    }else{
+                        $action['result'] = 'error';
+                        array_push($text,'O e-mail não pôde ser enviado.');
+                    }
+                }else{
+                    $action['result'] = 'error';
+                    array_push($text,'A confirmação não pôde ser salva. Motivo: ' . mysql_error());
+                }
+            }else{
+                $action['result'] = 'error';
+                array_push($text,'O usuário não pôde ser salvo. Motivo: ' . mysql_error());
+            }
+        }
+
+        $action['text'] = $text;
+  
+
+        return json_encode($action);
+
+
+    }
+
 
 ?>
-
-<!DOCTYPE html>
-<html lang="pt-BR" class="no-js">
-
-    <head>
-
-        <title>ABVET - Associação Brasileira de Veterinários Especialistas</title>
-
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <script src="js/jquery/jquery.js"></script>
-        <script src="js/modernizr/modernizr-latest.js"></script>
-        <script src="js/bootstrap/js/bootstrap.min.js"></script>
-        <script src="js/bootstrap/js/bootstrap-select.min.js"></script>
-        <script src="http://underscorejs.org/underscore-min.js"></script>
-        <script src="http://j.maxmind.com/app/geoip.js" charset="ISO-8859-1" type="text/javascript" ></script>
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-        <script src="js/app.js"></script>
-
-        <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link href="js/bootstrap/css/bootstrap-select.css" rel="stylesheet" media="screen">
-        <link rel="stylesheet" type="text/css" href="css/app.css">
-
-        <style>
-            #mapa { width:420px; height:420px; display:none; }
-        </style>
-
-
-    </head>
-
-    <body>
-
-        <?php require_once ('navbar.html'); ?>
-
-        <!-- Button to trigger modal -->
-        <a href="#myModal" role="button" class="btn" data-toggle="modal">Executar modal de demo</a>
-         
-        <!-- Modal -->
-        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Modal header</h3>
-          </div>
-          <div class="modal-body">
-            <p>Um corpo fino …</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-            <button class="btn btn-primary">Salvar mudanças</button>
-          </div>
-        </div>   
-
-    </body>
-
-</html>

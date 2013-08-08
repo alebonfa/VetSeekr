@@ -200,6 +200,9 @@
                     <input class="span12" type="password" id="txtSenha">
                 </div>
             </div>
+            <div class="row-fluid">
+                <input type="submit" class="btn btn-primary" id="sbmCadastrar">Salvar mudanças</button>
+            </div>
         </form>
     </div>
     <div class="modal-footer">
