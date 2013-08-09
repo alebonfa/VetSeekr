@@ -23,14 +23,12 @@ $(document).ready(function(){
 
     function alertSignupError(msg) {
         $("#alert_placeholder").html('<div class="alert alert-error" id="msgSignupError"></div>');
-        $("#msgSignupError").html('<button type="button" class="close" data-dismiss="alert">x</button>');
         $("#msgSignupError").append('<strong>Atenção! </strong>' + msg);
     }
 
     function alertSignupSuccess(msg) {
         alert(msg);
         $("#alert_placeholder").html('<div class="alert alert-success" id="msgSignupSuccess"></div>');
-        $("#msgSignupSuccess").html('<button type="button" class="close" data-dismiss="alert">x</button>');
         $("#msgSignupSuccess").append('<strong>Parabéns! </strong>' + msg);
     }
 

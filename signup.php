@@ -22,9 +22,7 @@
         	array_push($text,'O e-mail deve ser válido!'); 
         } else {
 
-        	$procura = mysql_query("SELECT * FROM users WHERE email = '$email'") or die("Execução de consulta gerou o seguinte erro no MYSQL: " . mysql_error());
-                    echo json_encode(array("success", "Foi!"));
-        exit;
+        	$procura = mysql_query("SELECT * FROM usuarios WHERE email = '$email'") or die("Execução de consulta gerou o seguinte erro no MYSQL: " . mysql_error());
         	if(mysql_num_rows($procura)>0) {
 	        	$action['result'] = 'error'; 
     	    	array_push($text,'Este e-mail já está cadastrado!'); 
@@ -44,7 +42,7 @@
         if($action['result'] != 'error'){
             $senha = md5($senha); 
             //adicionando ao banco de dados
-            $add = mysql_query("INSERT INTO users VALUES(NULL,'$email','$nome','$senha',0)");
+            $add = mysql_query("INSERT INTO usuarios VALUES(NULL,'$email','$nome','$senha',0)");
             if($add){
                 //salvando o ID recém criado
                 $userid = mysql_insert_id();
@@ -55,11 +53,12 @@
                 $confirm = mysql_query("INSERT INTO confirm VALUES(NULL,'$userid','$key','$email')"); 
                 if($confirm){
                     //incluindo a classe swift para controlar envios de e-mail
-                    include_once 'swift/swift_required.php';
+                    include_once 'php/swift/swift_required.php';
                     //criando array de informações para envio do e-mail de confirmações
                     $info = array(
                         'nome' => $nome,
                         'email' => $email,
+                        'senha' => $senha,
                         'key' => $key);
                     //enviando o e-mail
                     if(send_email($info)){
@@ -81,6 +80,10 @@
         }
 
         $action['text'] = $text;
+
+            echo json_encode(array("success", "Foi!"));
+            exit;
+
   
 
         return json_encode($action);

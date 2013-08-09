@@ -3,16 +3,17 @@
 function format_email($info, $format){
 
 	//set the root
-	$root = $_SERVER['DOCUMENT_ROOT'].'/signup';
+	$root = $_SERVER['DOCUMENT_ROOT'].'/VetSeekr/etc';
 
 	//grab the template content
 	$template = file_get_contents($root.'/signup_template.'.$format);
 			
 	//replace all the tags
-	$template = preg_replace('/\{USERNAME\}/', $info['username'], $template);
+	$template = preg_replace('/\{USERNAME\}/', $info['nome'], $template);
+	$template = preg_replace('/\{SENHA\}/', $info['senha'], $template);
 	$template = preg_replace('/\{EMAIL\}/', $info['email'], $template);
 	$template = preg_replace('/\{KEY\}/', $info['key'], $template);
-	$template = preg_replace('/\{SITEPATH\}/','localhost/signup', $template);
+	$template = preg_replace('/\{SITEPATH\}/','localhost/VetSeekr', $template);
 		
 	//return the html of the template
 	return $template;
@@ -35,7 +36,7 @@ function send_email($info){
 	$message = Swift_Message::newInstance();
 	$message ->setSubject('Bem Vindo à ABVET');
 	$message ->setFrom(array('bonfa@qualittas.com.br' => 'ABVET'));
-	$message ->setTo(array($info['email'] => $info['username']));
+	$message ->setTo(array($info['email'] => $info['nome']));
 	
 	$message ->setBody($body_plain_txt);
 	$message ->addPart($body, 'text/html');
